@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block title %}Lista de Presença{% endblock %}
+
+{% block content %}
+    <h1>Lista de Presença</h1>
+    <p><strong>Total de presenças:</strong> {{ inscritos|length }}</p>
+    <table id="tabela-presenca">
+        <thead>
+            <tr>
+                <th>Número</th>
+                <th>Nome</th>
+                <th>Cargo</th>
+                <th>Clube</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for inscrito in inscritos %}
+            <tr>
+                <td>{{ inscrito.numero }}</td>
+                <td>{{ inscrito.nome }}</td>
+                <td>{{ inscrito.cargo }}</td>
+                <td>{{ inscrito.clube }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"/>
+
+    <!-- jQuery e DataTables JS -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#tabela-presenca').DataTable({
+                pageLength: 50,
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json"
+                }
+            });
+        });
+    </script>
+    <style>
+        .dataTables_filter input {
+            width: 300px !important;
+        }
+    </style>
+{% endblock %}

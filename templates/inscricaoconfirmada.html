@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block title %}Inscrição Confirmada{% endblock %}
+
+{% block content %}
+    <div style="max-width: 500px; margin: 50px auto; padding: 30px; border: 1px solid #ccc; border-radius: 10px; background-color: #f9f9f9; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+        <h2 style="color: #0077c8; text-align: center;">Presença Confirmada com Sucesso!</h2>
+        <hr style="margin: 20px 0;">
+        <p style="text-align: left;"><strong>Número:</strong> {{ inscrito.numero }}</p>
+        <p style="text-align: left;"><strong>Nome:</strong> {{ inscrito.nome }}</p>
+        <p style="text-align: left;"><strong>Cargo:</strong> {{ inscrito.cargo }}</p>
+        <p style="text-align: left;"><strong>Clube:</strong> {{ inscrito.clube }}</p>
+    </div>
+{% endblock %}

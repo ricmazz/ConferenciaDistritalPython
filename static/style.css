@@ -1,0 +1,100 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+header {
+    background-color: #e6f2fb;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+}
+footer {
+    background-color: #0077c8;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+    margin-top: auto;
+}
+main {
+    padding: 40px;
+    text-align: center;
+}
+.botao {
+    display: block;
+    width: 250px;
+    margin: 20px auto;
+    padding: 15px;
+    background-color: #0077c8;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+}
+.botao:hover {
+    background-color: #aa0f52;
+}
+table {
+    width: 80%;
+    margin: 30px auto;
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid #999;
+    padding: 10px;
+    text-align: left;
+}
+th {
+    background-color: #f1f1f1;
+}
+tr:nth-child(even) {
+    background-color: #fff;
+}
+tr:nth-child(odd) {
+    background-color: #eee;
+}
+.btn-confirmar {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.btn-confirmar:hover {
+    background-color: #45a049;
+}
+.botao-voltar {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+.dataTables_filter input {
+    width: 300px !important;
+}
+.btn-acao {
+    background-color: #0077c8;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    margin-right: 10px;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn-acao:hover {
+    background-color: #005f9e;
+}

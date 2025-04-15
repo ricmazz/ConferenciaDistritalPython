@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+
+{% block title %}Etiquetas com QR Code{% endblock %}
+
+{% block content %}
+<h1>Etiquetas de Inscritos</h1>
+<div class="etiquetas-container">
+    {% for inscrito in inscritos %}
+    <div class="etiqueta">
+        <div class="qr-code">
+            <img src="data:image/png;base64,{{ inscrito.qr_code }}" alt="QR Code">
+        </div>
+        <div class="dados">
+            <p><strong>Nº Inscrição:</strong> {{ inscrito.numero }}</p>
+            <p><strong>Nome:</strong> {{ inscrito.nome }}</p>
+            <p><strong>Cargo:</strong> {{ inscrito.cargo }}</p>
+            <p><strong>Clube:</strong> {{ inscrito.clube }}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<style>
+    .etiquetas-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: flex-start;
+    }
+
+    .etiqueta {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        flex: 1 1 40%;
+        min-width: 300px;
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        background-color: #fff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .qr-code {
+        margin-right: 15px;
+    }
+
+    .qr-code img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .dados p {
+        margin: 4px 0;
+    }
+
+    .dados {
+        text-align: left;
+    }
+</style>
+{% endblock %}

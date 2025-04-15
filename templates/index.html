@@ -3,6 +3,9 @@
 {% block title %}Página Inicial{% endblock %}
 
 {% block content %}
+<img src="{{ url_for('static', filename='imgs/BannerConferencia.png') }}"
+     alt="Banner da Conferência"
+     style="width: 100%; height: auto; max-height: 150px; object-fit: contain; margin-bottom: 20px;">
 <a href="/registrar" class="botao">Lista de Inscritos</a>
 <a href="/lista" class="botao">Lista de Presença</a>
 <a href="/gerar-qrcode" class="botao">Gerar QR Code</a>

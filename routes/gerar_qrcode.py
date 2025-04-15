@@ -27,7 +27,7 @@ def gerar_dados_qr_codes(numeros_inscricoes, host="http://localhost:5000"):
 
     for inscrito in inscritos:
         if str(inscrito.numero) in numeros_inscricoes:
-            dados_str = f"{inscrito.numero},{inscrito.nome},{inscrito.cargo},{inscrito.clube}"
+            dados_str = f"{inscrito.numero};{inscrito.nome};{inscrito.cargo};{inscrito.clube}"
             base64_str = base64.b64encode(dados_str.encode('utf-8')).decode('utf-8')
             url = f"{host}/confirmar?p={base64_str}"
 

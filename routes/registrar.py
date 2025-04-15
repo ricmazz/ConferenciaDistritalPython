@@ -18,6 +18,7 @@ def registrar():
 @registrar_bp.route("/confirmar")
 def confirmar_inscricao():
     base64_str = request.args.get("p")
+    print(base64_str)
     if not base64_str:
         return render_template("erro.html", mensagem="O link de confirmação está incorreto ou incompleto.")
 

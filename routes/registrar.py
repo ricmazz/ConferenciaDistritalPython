@@ -15,6 +15,35 @@ def registrar():
 
     return render_template("registrar.html", inscritos=lista_inscritos)
 
+
+# Novo endpoint para confirmação de presença manual
+@registrar_bp.route("/confirmar-presenca", methods=["POST"])
+def confirmar_presenca():
+    numero = request.form.get("numero")
+
+    if not numero:
+        return render_template("erro.html", mensagem="Número de inscrição não informado.")
+
+    lista_inscritos = carregar_dados_planilha("ListaInscritos")
+
+    inscrito = next((i for i in lista_inscritos if str(i.numero) == str(numero)), None)
+
+    if not inscrito:
+        return render_template("erro.html", mensagem="Inscrição não encontrada.")
+
+    lista_presenca = carregar_dados_planilha("ListaPresenca")
+    if any(str(i.numero) == str(numero) for i in lista_presenca):
+        return render_template("erro.html", mensagem="Esta inscrição já foi confirmada anteriormente.")
+
+    registrar_presenca(inscrito)
+
+    return render_template("inscricaoconfirmada.html", inscrito={
+        "numero": inscrito.numero,
+        "nome": inscrito.nome,
+        "cargo": inscrito.cargo,
+        "clube": inscrito.clube
+    })
+
 @registrar_bp.route("/confirmar")
 def confirmar_inscricao():
     base64_str = request.args.get("p")

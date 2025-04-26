@@ -9,6 +9,7 @@
     <button class="btn-acao" onclick="selecionarTodos()">Selecionar todos</button>
     <button class="btn-acao" onclick="desmarcarTodos()">Desmarcar todos</button>
     <button class="btn-acao" onclick="gerarQRCodes()">Gerar QR Code</button>
+    <button class="btn-acao" onclick="qrCodeDownload()">Baixar QR Codes</button>
 </div>
 
 <form id="form-inscritos">
@@ -79,6 +80,41 @@
             console.error("Erro ao gerar QR Codes:", error);
             alert("Ocorreu um erro ao tentar gerar os QR Codes.");
         });
+    }
+
+    function qrCodeDownload() {
+        const selecionados = [];
+        document.querySelectorAll('input[name="inscrito"]:checked').forEach(cb => {
+            selecionados.push(cb.value);
+        });
+
+        fetch("/baixar-qrcodes", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ numeros: selecionados })
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.blob();
+                } else {
+                    throw new Error('Erro ao baixar QR Codes');
+                }
+            })
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = "qrcodes.zip";  // Nome do arquivo para baixar
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+            })
+            .catch(error => {
+                console.error("Erro ao baixar QR Codes:", error);
+                alert("Ocorreu um erro ao tentar baixar os QR Codes.");
+            });
     }
 
     $(document).ready(function() {

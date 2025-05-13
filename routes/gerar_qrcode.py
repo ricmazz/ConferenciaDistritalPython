@@ -42,7 +42,7 @@ def baixar_qrcodes():
                 qr.save(buffer)
                 buffer.seek(0)
                 
-                filename = f"{inscrito.numero} - {inscrito.nome}.svg"
+                filename = f"{inscrito.numero}.svg"
                 zip_file.writestr(filename, buffer.read())
 
     zip_buffer.seek(0)

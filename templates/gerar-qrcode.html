@@ -46,20 +46,28 @@
 
 <script>
     let tabela;
+    const selecionadosMap = new Map();
 
     function selecionarTodos() {
-        tabela.rows({ search: 'applied' }).nodes().to$().find('input[type="checkbox"]').prop('checked', true);
+        tabela.rows({ search: 'applied' }).every(function () {
+            const checkbox = $(this.node()).find('input[name="inscrito"]');
+            checkbox.prop('checked', true);
+            selecionadosMap.set(checkbox.val(), true);
+        });
     }
 
     function desmarcarTodos() {
-        tabela.rows().nodes().to$().find('input[type="checkbox"]').prop('checked', false);
+        tabela.rows({ search: 'applied' }).every(function () {
+            const checkbox = $(this.node()).find('input[name="inscrito"]');
+            checkbox.prop('checked', false);
+            selecionadosMap.set(checkbox.val(), false);
+        });
     }
 
     function gerarQRCodes() {
-        const selecionados = [];
-        document.querySelectorAll('input[name="inscrito"]:checked').forEach(cb => {
-            selecionados.push(cb.value);
-        });
+        const selecionados = Array.from(selecionadosMap.entries())
+            .filter(([_, marcado]) => marcado)
+            .map(([numero, _]) => numero);
 
         const host = window.location.origin;
 
@@ -83,10 +91,9 @@
     }
 
     function qrCodeDownload() {
-        const selecionados = [];
-        document.querySelectorAll('input[name="inscrito"]:checked').forEach(cb => {
-            selecionados.push(cb.value);
-        });
+        const selecionados = Array.from(selecionadosMap.entries())
+            .filter(([_, marcado]) => marcado)
+            .map(([numero, _]) => numero);
 
         fetch("/baixar-qrcodes", {
             method: "POST",
@@ -123,6 +130,19 @@
             language: {
                 url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json"
             }
+        });
+
+        $('#tabela-inscritos').on('change', 'input[name="inscrito"]', function () {
+            selecionadosMap.set(this.value, this.checked);
+        });
+
+        tabela.on('draw', function () {
+            tabela.rows({ page: 'current' }).every(function () {
+                const checkbox = $(this.node()).find('input[name="inscrito"]');
+                if (selecionadosMap.has(checkbox.val())) {
+                    checkbox.prop('checked', selecionadosMap.get(checkbox.val()));
+                }
+            });
         });
 
         // Marca todos os registros visíveis ao carregar

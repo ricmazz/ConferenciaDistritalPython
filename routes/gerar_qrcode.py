@@ -19,7 +19,7 @@ def gerar_qrcode():
 def gerar_qrcode_post():
     dados = request.get_json()
     numeros = dados.get("numeros", [])
-    host = dados.get("host", "http://localhost:5000")
+    host = dados.get("host", "https://www.ricardomazzarioli.com")
     etiquetas = gerar_dados_qr_codes(numeros, host=host)
     return render_template("etiquetas.html", inscritos=etiquetas)
 
@@ -27,16 +27,14 @@ def gerar_qrcode_post():
 def baixar_qrcodes():
     dados = request.get_json()
     numeros = dados.get("numeros", [])
-    host = dados.get("host", "http://localhost:5000")
+    host = dados.get("host", "https://www.ricardomazzarioli.com")
     inscritos = carregar_dados_planilha("ListaInscritos")
 
     zip_buffer = io.BytesIO()
     with zipfile.ZipFile(zip_buffer, "w", zipfile.ZIP_DEFLATED) as zip_file:
         for inscrito in inscritos:
             if str(inscrito.numero) in numeros:
-                dados_str = f"{inscrito.numero};{inscrito.nome};{inscrito.cargo};{inscrito.clube}"
-                base64_str = base64.b64encode(dados_str.encode('utf-8')).decode('utf-8')
-                url = f"{host}/confirmar?p={base64_str}"
+                url = f"https://www.ricardomazzarioli.com/confirmar?p={inscrito.numero}"
 
                 factory = qrcode.image.svg.SvgImage
                 qr = qrcode.make(url, image_factory=factory)
@@ -55,16 +53,14 @@ def baixar_qrcodes():
         download_name="qrcodes.zip"
     )
 
-def gerar_dados_qr_codes(numeros_inscricoes, host="http://localhost:5000"):
+def gerar_dados_qr_codes(numeros_inscricoes, host="https://www.ricardomazzarioli.com"):
     inscritos = carregar_dados_planilha("ListaInscritos")
     
     lista_com_qr = []
 
     for inscrito in inscritos:
         if str(inscrito.numero) in numeros_inscricoes:
-            dados_str = f"{inscrito.numero};{inscrito.nome};{inscrito.cargo};{inscrito.clube}"
-            base64_str = base64.b64encode(dados_str.encode('utf-8')).decode('utf-8')
-            url = f"{host}/confirmar?p={base64_str}"
+            url = f"https://www.ricardomazzarioli.com/confirmar?p={inscrito.numero}"
 
             qr = qrcode.make(url)
             buffer = BytesIO()

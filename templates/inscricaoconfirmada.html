@@ -11,4 +11,27 @@
         <p style="text-align: left;"><strong>Cargo:</strong> {{ inscrito.cargo }}</p>
         <p style="text-align: left;"><strong>Clube:</strong> {{ inscrito.clube }}</p>
     </div>
+
+    
+    <script>
+        window.onload = function(){
+            tocarBip();
+        }
+            
+        function tocarBip () {
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+
+            oscillator.type = 'triangle'; // pode usar também 'square', 'triangle', etc.
+            oscillator.frequency.setValueAtTime(1000, audioCtx.currentTime); // frequência em Hz (1000 = som agudo)
+            gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime); // volume baixo
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+
+            oscillator.start();
+            oscillator.stop(audioCtx.currentTime + 0.2
+        };
+    </script>
 {% endblock %}

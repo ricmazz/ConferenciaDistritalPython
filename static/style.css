@@ -95,3 +95,24 @@ tr:nth-child(odd) {
 .btn-acao:hover {
     background-color: #005f9e;
 }
+
+
+/* Responsividade */
+@media (min-width: 768px) {
+    /* Regras para tablets e celulares */
+    .menu-graph-btn {
+        display: flex; justify-content: center; align-items: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .menu-graph-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap; /* permite quebra em telas menores */
+        gap: 10%;
+        min-height: 50vh;
+        text-align: center;
+    }
+}

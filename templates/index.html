@@ -3,10 +3,61 @@
 {% block title %}Página Inicial{% endblock %}
 
 {% block content %}
-<img src="{{ url_for('static', filename='imgs/BannerConferencia.png') }}"
-     alt="Banner da Conferência"
-     style="width: 100%; height: auto; max-height: 150px; object-fit: contain; margin-bottom: 20px;">
-<a href="/registrar" class="botao">Lista de Inscritos</a>
-<a href="/lista" class="botao">Lista de Presença</a>
-<a href="/gerar-qrcode" class="botao">Gerar QR Code</a>
+<div class="main-container">
+    <img src="{{ url_for('static', filename='imgs/BannerConferencia.png') }}"
+         alt="Banner da Conferência"
+         style="width: 100%; height: auto; max-height: 150px; object-fit: contain; margin-bottom: 20px;">
+    <div class="text-center mb-12">
+        <h3 id="registerCount" class="fw-semibold"></h3>
+    </div>
+    <div class="d-flex  align-items-center flex-wrap text-center menu-graph-btn" style="gap: 10%;">
+        <div class="card" style="max-width: 280px; width: 100%;">
+            <div class="card-body">
+                <canvas id="graficoPresenca"></canvas>
+            </div>
+        </div>
+        <div class="d-flex flex-column gap-2" style="width: 100%; max-width: 250px;">
+            <a href="/registrar" class="botao text-center">Lista de Inscritos</a>
+            <a href="/lista" class="botao text-center">Lista de Presença</a>
+            <a href="/gerar-qrcode" class="botao text-center">Gerar QR Code</a>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    let chart;
+
+    async function atualizarGrafico() {
+        const response = await fetch('/dados-grafico');
+        const data = await response.json();
+        
+        const registerCount = document.getElementById('registerCount');
+        registerCount.innerHTML = `Total: ${data.presentes} / ${(data.presentes + data.ausentes)}`;
+        
+        const ctx = document.getElementById('graficoPresenca').getContext('2d');
+
+        if (chart) chart.destroy();
+
+        chart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Ausentes', 'Presentes'],
+                datasets: [{
+                    label: 'Quantidade',
+                    data: [data.ausentes, data.presentes],
+                    backgroundColor: ['#ed6625', '#198754']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {display: false},
+                    title: {display: true, text: 'Comparativo de Inscritos vs Presentes'}
+                }
+            }
+        });
+    }
+
+    window.onload = atualizarGrafico;
+</script>
 {% endblock %}

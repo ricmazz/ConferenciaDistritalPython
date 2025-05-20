@@ -96,6 +96,9 @@ tr:nth-child(odd) {
     background-color: #005f9e;
 }
 
+.lbl-confirmar {
+    font-size: 30px;
+}
 
 /* Responsividade */
 @media (min-width: 768px) {

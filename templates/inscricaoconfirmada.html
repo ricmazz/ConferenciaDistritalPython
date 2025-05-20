@@ -3,21 +3,25 @@
 {% block title %}Inscrição Confirmada{% endblock %}
 
 {% block content %}
-    <div class="container my-5">
+    <div class="container my-5 px-3 px-sm-4">
       <div class="row justify-content-center">
         <div class="col-12 col-md-8 col-lg-6">
           <div class="card text-center shadow-lg border-success">
-            <div class="card-body px-3 px-md-5 py-5" style="font-size: 1.25rem; line-height: 1.8;">
+            <div class="card-body px-3 px-md-5 py-5">
               <div class="mb-4 text-success">
                 <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="green" class="bi bi-check-circle" viewBox="0 0 16 16">
                   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.97 11.03a.75.75 0 0 0 1.07 0l3.992-3.992a.75.75 0 1 0-1.06-1.06L7.5 9.439 5.53 7.47a.75.75 0 0 0-1.06 1.06l2.5 2.5z"/>
                 </svg>
               </div>
-              <h3 class="card-title text-success mb-3">Presença Confirmada!</h3>
-              <p class="mb-3"><strong>Número:</strong><br> {{ inscrito.numero }}</p>
-              <p class="mb-3"><strong>Nome:</strong><br> {{ inscrito.nome }}</p>
-              <p class="mb-3"><strong>Cargo:</strong><br> {{ inscrito.cargo }}</p>
-              <p class="mb-4"><strong>Clube:</strong><br> {{ inscrito.clube }}</p>
+              <h1 class="card-title text-success mb-3" style="color: green">Presença Confirmada!</h1>
+              <h2 class="">Número:</h2>
+              <h2 class="" style="color: green">{{ inscrito.numero }}</h2>
+              <h2 class="">Nome:</h2>
+              <h2 class="" style="color: green">{{ inscrito.nome }}</h2>
+              <h2 class="">Cargo:</h2>
+              <h2 class="" style="color: green">{{ inscrito.cargo }}</h2>
+              <h2 class="">Clube:</h2>
+              <h2 class="" style="color: green">{{ inscrito.clube }}</h2>
             </div>
           </div>
         </div>

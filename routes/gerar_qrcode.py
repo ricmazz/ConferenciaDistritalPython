@@ -34,14 +34,14 @@ def baixar_qrcodes():
     with zipfile.ZipFile(zip_buffer, "w", zipfile.ZIP_DEFLATED) as zip_file:
         for inscrito in inscritos:
             if str(inscrito.numero) in numeros:
-                url = f"https://www.ricardomazzarioli.com/confirmar?p={inscrito.numero}"
+                url = f"{host}/confirmar?p={inscrito.numero}"
 
                 factory = qrcode.image.svg.SvgImage
                 qr = qrcode.make(url, image_factory=factory)
                 buffer = BytesIO()
                 qr.save(buffer)
                 buffer.seek(0)
-                
+
                 filename = f"{inscrito.numero}.svg"
                 zip_file.writestr(filename, buffer.read())
 
@@ -60,7 +60,7 @@ def gerar_dados_qr_codes(numeros_inscricoes, host="https://www.ricardomazzarioli
 
     for inscrito in inscritos:
         if str(inscrito.numero) in numeros_inscricoes:
-            url = f"https://www.ricardomazzarioli.com/confirmar?p={inscrito.numero}"
+            url = f"{host}/confirmar?p={inscrito.numero}"
 
             qr = qrcode.make(url)
             buffer = BytesIO()
